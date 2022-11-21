@@ -11,6 +11,10 @@ namespace Com.MyCompany.MyGame
 {
     public class GameManager : MonoBehaviourPunCallbacks
     {
+        #region Public Fields
+        public static GameManager Instance;
+        #endregion
+
         #region Photon Callbacks
 
         /// <summary>
@@ -57,7 +61,10 @@ namespace Com.MyCompany.MyGame
         #endregion
 
         #region Private Methods
-
+        private void Start()
+        {
+            Instance = this;
+        }
         void LoadArena()
         {
             if (!PhotonNetwork.IsMasterClient)
