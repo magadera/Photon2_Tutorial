@@ -1,15 +1,16 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.MyCompany.MyGame
 {
-    public class PlayerAnimatorManager : MonoBehaviour
+    public class PlayerAnimatorManager : MonoBehaviourPun
     {
         #region Private Fields
 
         [SerializeField]
-        // 원하느 값까지 도달하는데 걸리는 시간(감쇠)
+        // 원하는 값까지 도달하는데 걸리는 시간(감쇠)
         private float directionDampTime = 0.25f;
 
         #endregion
@@ -29,6 +30,12 @@ namespace Com.MyCompany.MyGame
         // Update is called once per frame
         void Update()
         {
+            //PhotonNetwork.IsConnected == true 통해서 네트워크와 상관없는 별도 코드 테스트 가능
+            if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+            {
+                return;
+            }
+
             if (!animator)
             {
                 return;
