@@ -1,13 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 
-public class ColorController : MonoBehaviour
+public class ColorController : MonoBehaviourPunCallbacks, IPunObservable
 {
     //GameObject cube;
     Color myColor;
+    Color receiveColor;
     public Renderer cubeRenderer;
     //TextMeshProUGUI myColorText = null;
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(myColor);
+        }
+        else
+        {
+            receiveColor = (Color)stream.ReceiveNext();
+        }
+    }
 
     private void Awake()
     {
@@ -32,12 +47,29 @@ public class ColorController : MonoBehaviour
 
     void OnKeyboard()
     {
+        if (photonView.IsMine)
+        {
+            ChangeColor();
+            SaveColor();
+        }
+        else
+        {
+            cubeRenderer.material.color = receiveColor;
+            Debug.Log("다른 유저가 색을 칠했습니다.");
+        }
+    }
+
+    void ChangeColor()
+    {
         if (Input.GetKeyDown(KeyCode.Return))
         {
             cubeRenderer.material.color = myColor;
             Debug.Log("도색 완료");
         }
+    }
 
+    void SaveColor()
+    {
         if (Input.GetKeyDown("r"))
         {
             myColor = Color.red;
@@ -66,7 +98,7 @@ public class ColorController : MonoBehaviour
         }
         if (Input.GetKeyDown("c"))
         {
-            myColor= Color.cyan;
+            myColor = Color.cyan;
             Debug.Log("cyan 색 저장");
         }
 
@@ -85,6 +117,5 @@ public class ColorController : MonoBehaviour
             myColor = Color.gray;
             Debug.Log("gray 색 저장");
         }
-
     }
 }

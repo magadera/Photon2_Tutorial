@@ -40,7 +40,7 @@ public class Managers : MonoBehaviourPunCallbacks
                 go.AddComponent<Managers>();
             }
 
-            DontDestroyOnLoad(go);
+            //DontDestroyOnLoad(go);
             s_Instance = go.GetComponent<Managers>();
         }
     }

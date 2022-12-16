@@ -79,6 +79,7 @@ namespace Com.MyCompany.MyGame
                 Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
             }
         }
+
         void LoadArena()
         {
             if (!PhotonNetwork.IsMasterClient)
