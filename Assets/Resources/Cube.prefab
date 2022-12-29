@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5558553574627445043}
   - component: {fileID: 8883832158532592810}
   m_Layer: 0
-  m_Name: Brick
+  m_Name: Cube
   m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c11a2226a27d74197f8ce899acef2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeRenderer: {fileID: 0}
 --- !u!114 &8883832158532592810
 MonoBehaviour:
   m_ObjectHideFlags: 0

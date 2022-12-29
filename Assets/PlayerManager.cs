@@ -22,12 +22,14 @@ namespace Com.MyCompany.MyGame
                 // We own this player: send the others our data
                 stream.SendNext(IsFiring);
                 stream.SendNext(Health);
+                stream.SendNext(color);
             }
             else
             {
                 // Network player, receive data
                 this.IsFiring = (bool)stream.ReceiveNext();
                 this.Health = (float)stream.ReceiveNext();
+                this.color = (Color)stream.ReceiveNext();
             }
         }
 
@@ -40,6 +42,7 @@ namespace Com.MyCompany.MyGame
         private GameObject beams;
         //True, when the user is firing
         bool IsFiring;
+        Color color;
         #endregion
 
         #region Public Fields
@@ -53,7 +56,7 @@ namespace Com.MyCompany.MyGame
         [Tooltip("The Player's UI GameObject Prefab")]
         [SerializeField]
         public GameObject PlayerUiPrefab;
-
+        Renderer renderer;
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -71,6 +74,8 @@ namespace Com.MyCompany.MyGame
             {
                 beams.SetActive(false);
             }
+
+            renderer = beams.GetComponentInChildren<Renderer>();
 
             // #Important
             // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
@@ -153,6 +158,23 @@ namespace Com.MyCompany.MyGame
             if(Health <= 0f)
             {
                 GameManager.Instance.LeaveRoom();
+            }
+
+            if (Input.GetKeyDown("r"))
+            {
+                renderer.material.color = Color.red;
+            }
+            if (Input.GetKeyDown("g"))
+            {
+                renderer.material.color = Color.green;
+            }
+            if (Input.GetKeyDown("b"))
+            {
+                renderer.material.color = Color.blue;
+            }
+            if (Input.GetKeyDown("y"))
+            {
+                renderer.material.color = Color.yellow;
             }
         }
 

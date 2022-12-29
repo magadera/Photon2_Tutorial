@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 
-public class Managers : MonoBehaviourPunCallbacks
+public class Managers : MonoBehaviourPun
 {
     // 유일성 보장
     static Managers s_Instance;
@@ -26,8 +26,11 @@ public class Managers : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        // 키보드나 마우스 체크 등을 Managers 안에서 하기 시작
-        _input.OnUpdate();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 키보드나 마우스 체크 등을 Managers 안에서 하기 시작
+            _input.OnUpdate();
+        }
     }
     static void Init()
     {
